@@ -69,6 +69,12 @@ class FreshnessAndReservation(unittest.TestCase):
         self.assertEqual(spoiled, ["I2", "I10"])
         self.assertEqual(s.stock[0]["fresh"], round(30.004 * UNITS_PER_POINT) - 2)
 
+    def test_spoiled_event_fires_once_across_later_ticks(self):
+        s = sim(stock=[item("I1", fresh=30.004)])
+        events = step_many(s, 8)
+        spoiled = [(name, data) for name, data in events if name == "spoiled"]
+        self.assertEqual(spoiled, [("spoiled", {"item_id": "I1", "kind": "ca_loc", "location": "stock"})])
+
     def test_spoiled_orders_release_then_re_reserve_once_in_order(self):
         stocks = [item("I1", fresh=30.004), item("I2", fresh=30.004), item("I3", fresh=31)]
         scenario = {"random_customers": False,
@@ -90,6 +96,32 @@ class FreshnessAndReservation(unittest.TestCase):
         self.assertTrue(any(name == "customer_arrived" for name, _ in events))
         self.assertEqual(s.customers[0]["reserved"], ["I2"])
         self.assertEqual(s.snapshot()["customers"][0]["reserved"], ["I2"])
+
+    def test_reservation_prefers_fresher_item_over_older_id(self):
+        s = sim(stock=[item("I1", fresh=60), item("I2", fresh=80)])
+        step_many(s, FIRST)
+        self.assertEqual(s.customers[0]["reserved"], ["I2"])
+
+    def test_spoiled_items_are_excluded_at_arrival_and_re_reservation(self):
+        only_spoiled = sim(stock=[item("I1", fresh=29)])
+        events = step_many(only_spoiled, FIRST)
+        self.assertIn(("no_dish", {}), events)
+        self.assertEqual(only_spoiled.customers, [])
+
+        mixed = sim(stock=[item("I1", fresh=20), item("I2", fresh=80)])
+        step_many(mixed, FIRST)
+        self.assertEqual(mixed.customers[0]["reserved"], ["I2"])
+
+        scenario = {"random_customers": False, "player": {"pos": [2, 8]},
+                    "customers": [customer("K1", "T1", ["I3"])]}
+        re_reserve = sim(scenario, [item("I1", fresh=20), item("I3", fresh=30.004)])
+        step_many(re_reserve, 2)
+        order = re_reserve.customers[0]
+        self.assertEqual((order["order_status"], order["reserved"]), ("unfulfillable", []))
+        press = InputPlayer([{"tick": re_reserve.sim_tick, "interact": True}])
+        events = re_reserve.step(press.advance(re_reserve.sim_tick))
+        self.assertFalse(any(name == "cook_started" for name, _ in events))
+        self.assertEqual(re_reserve.stoves[0]["state"], "idle")
 
     def test_scenario_orders_without_reserved_are_served_by_order_tick_then_table(self):
         """Ticket-03: bỏ `reserved` cho đơn reserved thì cấp theo order_tick rồi id bàn, lấy tươi nhất rồi id nhỏ."""

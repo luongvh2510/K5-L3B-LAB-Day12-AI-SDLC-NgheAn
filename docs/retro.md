@@ -1,7 +1,9 @@
 # Retro nhóm
 
 ## Phase 2 (nhanh)
+
 Bản nháp của D (Integrator); TuHoAnh và Cuongngucuteee đã thêm phần của mình, A bổ sung hoặc sửa.
+
 - Điều tốt:
   - Khóa contract v1.1 trước (P2-02) nên A, B, C làm song song ở file riêng (`fish.py`, `monsters.py`, `shop.py`, `quan.py`) mà ít đụng nhau; `main` luôn chạy được sau mỗi PR.
   - Phá thử code bằng cách sửa có chủ đích (mutation) bắt được lỗi test bỏ sót: ở `day.py` một cách phá sống sót (không lọc món theo kế hoạch) dẫn tới test mới; ở `monsters.py` kẽ hở "phát hiện khi đang nổi" được C vá sau review.
@@ -19,12 +21,16 @@ Bản nháp của D (Integrator); TuHoAnh và Cuongngucuteee đã thêm phần c
   - **TuHoAnh:** Luôn `git fetch` + `merge origin/main` và chạy đủ `unittest` + `check_no_hardcode.py` trước mọi lần mở PR.
 
 ## Phase 3 (nhanh)
+
 A gom và nộp (P3-10). Phần của A đã được đối chiếu và cập nhật theo PR #45, #46 và kết quả phá thử. Phần của B do D soạn từ lịch sử PR và review, chờ B đọc lại.
+
 - Điều tốt:
   - **Cuongngucuteee:** HUD độ tươi (P3-06) làm song song với gather và quán nhờ D gộp schema kho cá thể (P3-02) trước và ghi dạng snapshot trong hợp đồng; test dùng thẳng adapter của P3-02 nên không tự bịa dữ liệu.
   - **NguyenDucNhat3006 (A):** P3-03 đưa giỏ cá thể và kiểm tick cá vừa xuống dưới ngưỡng ươn. P3-05 nối kho Lặn → Quán cùng tick, giữ ID và độ tươi khi bàn giao. Shop giữ độ tươi, Ngày mới cấp ID mới. [PR #45](https://github.com/luongvh2510/K5-L3B-LAB-Day12-AI-SDLC-NgheAn/pull/45), [PR #46](https://github.com/luongvh2510/K5-L3B-LAB-Day12-AI-SDLC-NgheAn/pull/46)
-  - **TuHoAnh (B, D soạn từ PR):** P3-04 có đủ luật quán v1.2 (hao kể cả hàng đang giữ, giữ chỗ theo id, nhả và giữ lại đúng một lần, `unfulfillable`, giá theo độ tươi); đã đổi tên hồ sơ thành `TuHoAnh.md` đúng yêu cầu.
+  - **TuHoAnh (B, D soạn từ PR):** P3-04 có đủ luật quán v1.2 (hao kể cả hàng đang giữ, giữ chỗ theo id, nhả và giữ lại đúng một lần, `unfulfillable`, giá theo độ tươi); đã đổi tên hồ sơ thành `TuHoAnh.md` đúng yêu cầu. Đã đọc và xác nhận nội dung Phase 3 do D soạn; đã mở PR, đối chiếu xong 4 khóa freshness, công thức giá, payload spoiled và bổ sung đủ 3 test chống phá thử vào tests/test_p3_quan.py.
+
   - **luongvh2510 (D):** Gộp schema, adapter và `freshness` vào `main` trước (P3-02) nên A, B, C làm song song mà ít xung đột; phá thử mỗi PR bắt được các chỗ test chưa chặt; bật 1.2 giữ hồi quy Phase 1-2 xanh (27/27, 15/15) nhờ chạy chúng với bản 1.1.
+
 - Điều tệ:
   - **Cuongngucuteee:** Mã việc trên Sheet lệch 1 so với kế hoạch nên tôi đặt nhầm tên hai PR (#39, #42); chưa thử HUD với sim v1.2 thật vì quán chưa xong.
   - **NguyenDucNhat3006 (A):** Lúc mở #46, tôi mới kiểm bàn giao với Quán giả lập vì P3-04 chưa gộp. Lương phá thử và tìm được hai chỗ test còn lọt là sức chứa giỏ lúc dựng sim và việc sao chép kho khi mở Shop. Tôi cũng để dồn hồ sơ và nhật ký AI sang Phase 4. [Ma trận Phase 3](verification/phase-3.md)
@@ -37,6 +43,7 @@ A gom và nộp (P3-10). Phần của A đã được đối chiếu và cập n
   - **luongvh2510 (D):** Trước khi khóa contract (v1.3, bench và soak), nhờ người đọc được Ticket-04 đối chiếu tên khóa và trường từng chữ; mỗi PR ghi rõ chỗ nào là giả định.
 
 ## Phase 4 (cuối)
+
 - Rà lại hành động Phase 2: đã làm chưa? vì sao?
   - **luongvh2510 (D):** Hành động tôi chốt cho Phase 3 là "chốt câu hỏi còn mở với PO và mỗi người ghi nhật ký AI, hồ sơ trong chính PR của task mình". **Chưa làm đủ:** không có kênh PO nên các dòng `clarify` vẫn là giả định (riêng Ticket-04 đã đối chiếu khi đọc được đề); A và B vẫn nộp nhật ký AI và hồ sơ dồn cuối. C đã làm đúng hành động của mình (HUD độ tươi đẩy sớm). Hành động của TuHoAnh (gộp `main` trước khi mở PR) cũng chưa thành thói quen: nhánh P3-04 của B phải được D gộp `main` hộ.
 - Điều tốt / điều tệ:
@@ -53,6 +60,12 @@ A gom và nộp (P3-10). Phần của A đã được đối chiếu và cập n
 - **Rà hành động Phase 2:** Khi đổi kho ở Phase 3, phần Lặn và bàn giao được tách PR và có bằng chứng kiểm thử. Phần ghi chép cá nhân được bổ sung muộn hơn các PR tính năng.
 - **Điều tốt:** Hai PR giỏ cá thể và bàn giao gộp đúng thứ tự. Lần chạy thử P4-10 gửi phím qua Chrome, kiểm được cá bắt ở Lặn sang Quán, nấu và bán món rồi mua oxy và đóng Shop. [PR #45](https://github.com/luongvh2510/K5-L3B-LAB-Day12-AI-SDLC-NgheAn/pull/45), [PR #46](https://github.com/luongvh2510/K5-L3B-LAB-Day12-AI-SDLC-NgheAn/pull/46)
 - **Điều cần sửa:** Codex thử benchmark với `--seconds` theo kế hoạch nội bộ. Lương chạy lệnh đề, thấy `--duration` bị từ chối, rồi bổ sung cờ, 3 giây làm nóng và đo lại trước khi gộp. Lần sau tôi sẽ chạy đúng lệnh chấm như hộp đen trước khi mở PR. [Bản sửa P4-03](https://github.com/luongvh2510/K5-L3B-LAB-Day12-AI-SDLC-NgheAn/commit/e2a3b64)
+
+### Hồ Anh Tú (B — TuHoAnh)
+
+- **Rà hành động Phase 2 & 3:** Đã thực hiện chạy `unittest` và `check_no_hardcode.py` trước khi mở PR ở Phase 3–4; tuy nhiên ở Phase 3 có lúc đẩy nhánh trước khi tạo PR và chưa đồng bộ `main` kịp thời, dẫn tới phải nhờ D gộp hộ.
+- **Điều tốt:** Hoàn thành đúng hạn các lát lõi của Quán qua 3 phase (`P1-06`, `P1-07`, `P2-05`, `P3-04`), đối chiếu khớp Ticket-03 (4 khóa `freshness`, công thức giá, payload `spoiled`) và bổ sung đủ test chống phá thử (`380/380` test đạt).
+- **Điều cần sửa:** Cần thống nhất `git config` đúng handle `TuHoAnh` ngay từ đầu (tránh lẫn `HoAnhTu245`), mở PR nháp ngay khi đẩy nhánh và ghi nhật ký AI song song từng phase thay vì bổ sung cuối buổi.
 
 ### TuHoAnh (B) — D soạn thay theo yêu cầu từ lịch sử PR, chờ B đọc và sửa
 
