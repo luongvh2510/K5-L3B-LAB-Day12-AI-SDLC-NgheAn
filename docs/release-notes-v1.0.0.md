@@ -1,7 +1,5 @@
 # Quán Ăn Chợ Nổi v1.0.0
 
-> **KHUNG release notes (bản nháp của D).** Dán nội dung này vào GitHub Release `v1.0.0` sau khi cả nhóm đồng ý; điền các chỗ **[CHỜ]** và cập nhật số liệu tại commit gắn tag `phase-4`.
-
 Game 2D nhỏ của nhóm NgheAn (lab Day 12, AI SDLC): buổi sáng Út Sen **lặn bắt cá, hái rau** trên sông (tránh Cá Sấu, canh oxy và Máu), buổi tối **mở quán** nấu và phục vụ khách, cuối Ngày ghé **Shop** nâng cấp oxy và Máu. Một Ngày chạy liền ba pha, chơi 1 đến 5 Ngày.
 
 ## Điểm mới của bản 1.0.0 (so với các tag phase trước)
@@ -32,11 +30,11 @@ python3 -m chonoi.soak --seed 7 --days 10 --out soak.json                     # 
 python3 tools/check_determinism.py                                            # cùng seed, output giống từng byte
 ```
 
-## Số liệu kiểm chứng (cập nhật tại commit gắn tag **[CHỜ]**)
-- Test: 377 test OK; smoke Phase 1 27/27, Phase 2 15/15, Phase 3 13/13; kiểm tất định và kiểm hard-code đạt.
-- Bench (`--seed 42 --duration 30`, bộ vẽ phần mềm 1280×720 trong bộ nhớ): 1361 FPS trung bình, 836 FPS ở 1% khung chậm nhất, `load_ms` khoảng 136; đạt mốc báo cáo của đề (avg ≥ 60, 1% low ≥ 30, load ≤ 10 s).
-- Soak (`--seed 7 --days 10`): 10/10 Ngày, 0 crash.
-- CI Ubuntu: thành công trên commit gắn tag **[CHỜ: liên kết run]**.
+## Số liệu kiểm chứng
+- Test: 388 test OK; smoke Phase 1 27/27, Phase 2 15/15, Phase 3 13/13; kiểm tất định và kiểm hard-code OK.
+- Bench (`--seed 42 --duration 30`, bộ vẽ phần mềm 1280×720 trong bộ nhớ): 32.673 khung (32673 frames), 1089.09 FPS trung bình, 517.85 FPS 1% low, `load_ms` 96.97; đạt mốc báo cáo của đề (avg ≥ 60, 1% low ≥ 30, load ≤ 10 s).
+- Soak (`--seed 7 --days 10`): 10/10 Ngày, 0 crash, `duration_s` 6.29s.
+- CI Ubuntu: xem workflow CI trên tag `phase-4` (các lần chạy `push main` đã xác minh: [run 44918861655](https://github.com/luongvh2510/K5-L3B-LAB-Day12-AI-SDLC-NgheAn/actions/runs/44918861655), [run 44919726436](https://github.com/luongvh2510/K5-L3B-LAB-Day12-AI-SDLC-NgheAn/actions/runs/44919726436)).
 - Ma trận truy vết: [docs/verification/phase-4.md](verification/phase-4.md); bằng chứng ở `docs/proof/`.
 
 ## Thay đổi phá vỡ cần biết
@@ -51,7 +49,7 @@ python3 tools/check_determinism.py                                            # 
 - Chưa làm phần mở rộng (bảng xếp hạng, phụ đề SFX).
 
 ## Đính kèm
-- **Bản đóng gói chạy được [CHỜ]:** tạo từ đúng commit gắn tag, ví dụ `git archive --format=zip --prefix=quan-an-cho-noi-v1.0.0/ -o quan-an-cho-noi-v1.0.0.zip phase-4`; giải nén rồi chạy `python3 -m chonoi.live` (không cần cài gói).
+- **Bản đóng gói chạy được:** tạo từ đúng commit gắn tag bằng `git archive --format=zip --prefix=quan-an-cho-noi-v1.0.0/ -o quan-an-cho-noi-v1.0.0.zip phase-4`; giải nén rồi chạy `python3 -m chonoi.live` (không cần cài gói).
 
 ## Ghi công
 Nhóm NgheAn: Nguyễn Đức Nhật, Hồ Anh Tú, Phan Trần Mạnh Cường, Võ Hồng Lương. Khung starter và đề do giảng viên cấp. Công cụ AI đã dùng theo từng phase ghi ở `docs/ai-usage-log.md` và `CREDITS.md`. Không dùng asset ngoài; hình vẽ bằng Canvas, chữ dùng font hệ thống, không có âm thanh. Giấy phép: MIT, xem `LICENSE`.
