@@ -27,3 +27,4 @@
 
 ## Skills / hooks của nhóm
 - (Ghi tên và khi nào dùng; tối thiểu 2 skill/hook/command nhóm tự viết, đặt ở `.agents/skills/` hoặc tương đương.)
+- **Hook `pre-push`** (`.agents/hooks/pre-push`, C): chạy toàn bộ test trước mỗi `git push`, test đỏ thì chặn. Cài một lần mỗi máy: `sh .agents/hooks/install.sh` (đặt `core.hooksPath`). Bỏ qua khẩn cấp: `git push --no-verify` và ghi lý do vào standup.

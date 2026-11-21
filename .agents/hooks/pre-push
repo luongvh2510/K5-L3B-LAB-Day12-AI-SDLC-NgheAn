@@ -1,0 +1,12 @@
+#!/bin/sh
+# Hook pre-push của nhóm (HX-04): chạy toàn bộ test trước khi đẩy; test đỏ -> chặn push.
+# Cài một lần cho mỗi máy:   sh .agents/hooks/install.sh
+# Bỏ qua khẩn cấp (ghi lý do trong standup): git push --no-verify
+ROOT="$(git rev-parse --show-toplevel)" || exit 1
+cd "$ROOT" || exit 1
+echo "[pre-push] Đang chạy test: PYTHONPATH=tests:. python3 -m unittest discover -s tests"
+if ! PYTHONPATH=tests:. python3 -m unittest discover -s tests -q; then
+  echo "[pre-push] TEST ĐỎ -> chặn push. Sửa luật (không sửa test cho xanh) rồi đẩy lại." >&2
+  exit 1
+fi
+echo "[pre-push] Test xanh, cho phép push."
